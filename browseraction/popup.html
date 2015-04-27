@@ -1,0 +1,67 @@
+<html>
+	<head>
+		<style>
+			body {
+			  margin: 10;
+			  background-color: #222222;
+			  font-size: 14px;
+			  color: #999797;
+			  text-align: center;
+			}
+
+			div.main {
+				border-radius: 5px;
+				background: #2C2C2C;
+				font-size: 15px;
+				font-family: 'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+				padding: 20px;
+				width: 500px;
+				box-shadow: inset 1px 1px 3px rgba(1,1,1,1);
+				overflow: hidden;
+			}	
+			button {
+				display: inline-block;	
+				padding:10px 15px;
+				color: black;
+				font-size:20px;
+				font-weight: bold;
+				border-radius:15px;
+				border:2px solid black;
+				margin: 5px;
+				box-shadow: 0 5px white;
+			}
+			
+			button:focus {
+				outline:0;
+			}
+
+			button:hover {
+  				background-color: #0099CC;
+  				cursor: pointer;
+			}
+
+			button:active {
+			  box-shadow: 0 0px;
+			  transform: translateY(5px);
+			}
+
+			.green-button {
+				background:#66FF33;
+			}
+			.red-button {
+				background:#FF3300;
+			}
+
+		</style>	
+	</head>
+	<body>
+		<h1>Drifter</h1>
+		<script src="popup.js"></script>
+		<div class='main'>
+			<div style="width:500px">
+				<button id="start" class="green-button">Start</button>
+				<button id="stop" class="red-button">Stop</button>
+			</div>
+		</div>
+	</body>
+</html>

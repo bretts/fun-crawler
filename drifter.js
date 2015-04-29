@@ -20,6 +20,8 @@ Drifter.prototype.stop = function() {
 }
 
 Drifter.prototype.clickLink = function() {
+	chrome.extension.getBackgroundPage().console.log('clickLink: ');
+
 	instance = this;
 
 	chrome.tabs.get(instance.tabId, function(tab){
@@ -31,11 +33,12 @@ Drifter.prototype.clickLink = function() {
 				chrome.tabs.sendMessage(tab.id, {type: "click-link"}, function(response){
 					try {
 						instance.timeWaited = 0;
-						instance.clickLink();
+						setTimeout(function() { instance.clickLink() }, 2000);
 					}
 					catch(err) {
+						chrome.tabs.sendMessage(tab.id, {type: "go-home"});
 						drifter.timeWaited = 0;
-						instance.clickLink();
+						setTimeout(function() { instance.clickLink() }, 5000);
 					}
 				});
 			}
@@ -44,20 +47,22 @@ Drifter.prototype.clickLink = function() {
 }
 
 Drifter.prototype.waitForPageLoad = function() {
-	chrome.extension.getBackgroundPage().console.log("waitForPageLoad");
+	chrome.extension.getBackgroundPage().console.log('waitForPageLoad: ' + instance.timeWaited);
+
 	instance = this;
 
 	instance.timeWaited += 1;
-	if(instance.timeWaited >= 15 && instance.active == true) {
+	if(instance.timeWaited >= 10 && instance.active == true) {
 		chrome.tabs.get(instance.tabId, function(tab){
-			chrome.tabs.sendMessage(tab.id, {type: "go-home"}, function(response){
+			chrome.tabs.sendMessage(tab.id, {type: "click-link"}, function(response){
 				try {
 					instance.timeWaited = 0;
-					setTimeout(function() { instance.clickLink() }, 3000);
+					setTimeout(function() { instance.clickLink() }, 2000);
 				}
 				catch(err) {
-					instance.timeWaited = 0;
-					setTimeout(function() { instance.clickLink() }, 3000);
+					chrome.tabs.sendMessage(tab.id, {type: "go-home"});
+					drifter.timeWaited = 0;
+					setTimeout(function() { instance.clickLink() }, 5000);
 				}
 			});
 		});

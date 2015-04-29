@@ -1,9 +1,11 @@
 chrome.extension.onMessage.addListener(function(message, sender, sendResponse) {
 	switch(message.type) {
 		case "click-link":
+			console.log('click-link');
 			clickLink();
 			break;
 		case "go-home":
+			console.log('go-home');
 			navHome();
 			break;
 	}

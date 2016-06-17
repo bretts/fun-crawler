@@ -25,7 +25,7 @@ Drifter.prototype.clickLink = function() {
 	instance = this;
 
 	chrome.tabs.get(instance.tabId, function(tab){
-		if(tab.status != 'complete') {
+		if((JSON.parse(window.localStorage["drifterSettings"]).waitForPageLoad == "checked") && (tab.status != 'complete')) {
 			instance.waitForPageLoad();
 		}
 		else {
@@ -33,7 +33,7 @@ Drifter.prototype.clickLink = function() {
 				chrome.tabs.sendMessage(tab.id, {type: "click-link"}, function(response){
 					try {
 						instance.timeWaited = 0;
-						setTimeout(function() { instance.clickLink() }, 2000);
+						setTimeout(function() { instance.clickLink() }, 375);
 					}
 					catch(err) {
 						chrome.tabs.sendMessage(tab.id, {type: "go-home"});

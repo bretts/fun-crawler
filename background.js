@@ -1,23 +1,24 @@
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     switch(request.type) {
-        case "start-drifter":
+        case "start-fun-crawler":
         	setMenuActive();
-        	drifter = new Drifter();
-        	drifter.start();
+        	funCrawler = new FunCrawler();
+        	funCrawler.start();
         	break;
-        case "stop-drifter":
+        case "stop-fun-crawler":
         	setMenuUnActive();
-        	drifter.stop();
+        	funCrawler.stop();
         	break;
         case "get-starting-url":
-        	sendResponse({url: drifter.startingUrl});
+        	sendResponse({url: funCrawler.startingUrl});
         	break;
     }
     return true;
 });
 
 var setMenuUnActive = function() {
-	chrome.browserAction.setBadgeText({"text": ""});
+	chrome.browserAction.setBadgeText({"text": "OFF"});
+    chrome.browserAction.setBadgeBackgroundColor({"color": [255, 0, 0, 255]})
 }
 
 var setMenuActive = function() {

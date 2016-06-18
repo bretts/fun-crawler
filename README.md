@@ -1,4 +1,4 @@
-Drifter
+FunCrawler
 ===========
 
 PURPOSE
@@ -11,7 +11,7 @@ USAGE
 		
 		2) Navigate to the URL you want to crawl.
 
-		3) Click on the drifter icon in the browser
+		3) Click on the funCrawler icon in the browser
 
 		4) Click start
 

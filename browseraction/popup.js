@@ -2,27 +2,27 @@ window.onload = function() {
 	
 	document.getElementById("start").onclick = function() {
 		chrome.extension.sendMessage({
-	        type: "start-drifter"
+	        type: "start-fun-crawler"
 	    });
 	    window.close();
 	}
 
 	document.getElementById("stop").onclick = function() {
 		chrome.extension.sendMessage({
-	        type: "stop-drifter"
+	        type: "stop-fun-crawler"
 	    });
 	    window.close();
 	}
 
-	// Bootstrap the drifter settings
-	drifterSettings = window.localStorage["drifterSettings"];
-	if(drifterSettings == undefined) {
-    	window.localStorage["drifterSettings"] = JSON.stringify({ "waitForPageLoad": "checked" })
+	// Bootstrap the funCrawler settings
+	funCrawlerSettings = window.localStorage["funCrawlerSettings"];
+	if(funCrawlerSettings == undefined) {
+    	window.localStorage["funCrawlerSettings"] = JSON.stringify({ "waitForPageLoad": "checked" })
     	document.getElementById("waitForPageLoad").checked = true;
   	}
   	else
   	{
-  		if(JSON.parse(window.localStorage["drifterSettings"]).waitForPageLoad == "checked") {
+  		if(JSON.parse(window.localStorage["funCrawlerSettings"]).waitForPageLoad == "checked") {
   			document.getElementById("waitForPageLoad").checked = true;
   		}
   		else
@@ -37,7 +37,7 @@ window.onload = function() {
   			chrome.extension.sendMessage({
 	        	type: "wait-page-load-on"
 	    	});
-	    	window.localStorage["drifterSettings"] = JSON.stringify({ "waitForPageLoad": "checked" })
+	    	window.localStorage["funCrawlerSettings"] = JSON.stringify({ "waitForPageLoad": "checked" })
 	    	document.getElementById("waitForPageLoad").checked = true;
   		}
   		else
@@ -45,7 +45,7 @@ window.onload = function() {
   			chrome.extension.sendMessage({
 	        	type: "wait-page-load-off"
 	    	});
-	    	window.localStorage["drifterSettings"] = JSON.stringify({ "waitForPageLoad": "unchecked" })
+	    	window.localStorage["funCrawlerSettings"] = JSON.stringify({ "waitForPageLoad": "unchecked" })
 	    	document.getElementById("waitForPageLoad").checked = false;
   		}
 		

@@ -1,11 +1,11 @@
-function Drifter() {
+function FunCrawler() {
 	this.startingUrl = null;
 	this.tabId = null;
 	this.active = true;
 	this.timeWaited = 0;
 }
 
-Drifter.prototype.start = function() {
+FunCrawler.prototype.start = function() {
 	instance = this;
 
 	chrome.tabs.query({active: true}, function(tab){
@@ -15,17 +15,17 @@ Drifter.prototype.start = function() {
 	});
 }
 
-Drifter.prototype.stop = function() {
+FunCrawler.prototype.stop = function() {
 	this.active = false;
 }
 
-Drifter.prototype.clickLink = function() {
+FunCrawler.prototype.clickLink = function() {
 	chrome.extension.getBackgroundPage().console.log('clickLink: ');
 
 	instance = this;
 
 	chrome.tabs.get(instance.tabId, function(tab){
-		if((JSON.parse(window.localStorage["drifterSettings"]).waitForPageLoad == "checked") && (tab.status != 'complete')) {
+		if((JSON.parse(window.localStorage["funCrawlerSettings"]).waitForPageLoad == "checked") && (tab.status != 'complete')) {
 			instance.waitForPageLoad();
 		}
 		else {
@@ -33,11 +33,17 @@ Drifter.prototype.clickLink = function() {
 				chrome.tabs.sendMessage(tab.id, {type: "click-link"}, function(response){
 					try {
 						instance.timeWaited = 0;
-						setTimeout(function() { instance.clickLink() }, 375);
+						if((JSON.parse(window.localStorage["funCrawlerSettings"]).waitForPageLoad != "checked")) {
+							setTimeout(function() { instance.clickLink() }, 1000);	
+						}
+						else
+						{
+							instance.clickLink();
+						}
 					}
 					catch(err) {
 						chrome.tabs.sendMessage(tab.id, {type: "go-home"});
-						drifter.timeWaited = 0;
+						funCrawler.timeWaited = 0;
 						setTimeout(function() { instance.clickLink() }, 5000);
 					}
 				});
@@ -46,7 +52,7 @@ Drifter.prototype.clickLink = function() {
 	});
 }
 
-Drifter.prototype.waitForPageLoad = function() {
+FunCrawler.prototype.waitForPageLoad = function() {
 	chrome.extension.getBackgroundPage().console.log('waitForPageLoad: ' + instance.timeWaited);
 
 	instance = this;
@@ -61,7 +67,7 @@ Drifter.prototype.waitForPageLoad = function() {
 				}
 				catch(err) {
 					chrome.tabs.sendMessage(tab.id, {type: "go-home"});
-					drifter.timeWaited = 0;
+					funCrawler.timeWaited = 0;
 					setTimeout(function() { instance.clickLink() }, 5000);
 				}
 			});

@@ -4,6 +4,9 @@ window.onload = function() {
 		chrome.extension.sendMessage({
 	        type: "start-fun-crawler"
 	    });
+        chrome.tabs.getSelected(null, function(tab) {
+            ga('send', 'event', 'starting-fun-crawler', tab.url);
+        });
 	    window.close();
 	}
 
@@ -11,6 +14,9 @@ window.onload = function() {
 		chrome.extension.sendMessage({
 	        type: "stop-fun-crawler"
 	    });
+        chrome.tabs.getSelected(null, function(tab) {
+            ga('send', 'event', 'stopping-fun-crawler', tab.url);
+        });
 	    window.close();
 	}
 
